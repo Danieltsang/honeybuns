@@ -11,11 +11,9 @@ class MessageArea extends Component {
   render() {
     let messages = this.props.messageArray.map((msg, i) => {
       let color = 'white';
-      _.each(this.props.users, (user) => {
-        if(msg.name === user) {
-          color = user.userColor;
-        }
-      });
+      if (this.props.users[msg.name]) {
+        color = this.props.users[msg.name].userColor;
+      }
       return <Message message={msg} key={i} userColor={color}/>;
     });
     return (
