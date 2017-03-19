@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import '.';
+import Parse from './parse';
 import Upload from './components/Upload.js';
 import Message from './components/Message.js';
 import Content from './components/Content.js';
@@ -21,6 +20,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {showMainApp: false};
+
+    this.upload = this.upload.bind(this);
+  }
+
+  upload(e) {
+      let p = new Parse(e);
+      p.parseText();
   }
 
   topWords(messages) {

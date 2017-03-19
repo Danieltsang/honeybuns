@@ -22,8 +22,8 @@ const Parse = (e) => {
     let file = (e.target.files)[0];
     return {
         parseText: (callback) => {
-            console.log(Papa);
             Papa.parse(file, {
+                newline: '\r\n',
                 step: (results, parser) => {
                     // Example of results returned in an array
                     // 0: "2017-03-12"
