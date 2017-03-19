@@ -5,7 +5,7 @@ import '../styles/message-area.css';
 class MessageArea extends Component {
   
   render() {
-    var messages = this.props.messageArray.map((msg, i) =>
+    let messages = this.props.messageArray.map((msg, i) =>
       <Message message={msg} key={i} />
     );
     return (

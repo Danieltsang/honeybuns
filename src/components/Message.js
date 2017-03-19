@@ -6,7 +6,7 @@ class Message extends Component {
     return (
       <div className='message'>
         <div className='msg-date'>
-          {this.props.message.date.format("ddd, MMM, Do YYYY, h:mm a")}
+          {this.props.message.date.format("ddd, MMM Do YYYY, h:mm a")}
         </div>
         <div className='msg-name'>
           {this.props.message.name+':'}
