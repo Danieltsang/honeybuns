@@ -10,7 +10,8 @@ import _ from 'underscore';
  *      "bye": 5
  *     },
  *    numWords: [19, 20, 30],
- *    messageLengths: [123, 119, 179, 200]
+ *    messageLengths: [123, 119, 179, 200],
+ *    highestWordCountDictionary: [ [ 'd', 17 ], [ 'c', 11 ], [ 'z', 9 ], [ 'b', 7 ], [ 'y', 6 ] ]
  *    averageNumberWordsInMessage: 20,
  *    averageMessageLength: 156
  *   }
@@ -20,12 +21,29 @@ import _ from 'underscore';
 
 function Analyzer() {
     this.data = {
-        users: {}
+        users: {},
+        words: {}
     };
 }
 
 Analyzer.prototype.getAllData = function() {
     return this.data;
+};
+
+Analyzer.prototype.analyzeAllData = function() {
+    _.each(this.data.users, (user) => {
+        // Create items array
+        let items = Object.keys(user.words).map(function(key) {
+            return [key, user.words[key]];
+        });
+
+        // Sort the array based on the second element
+        items.sort(function(first, second) {
+            return second[1] - first[1];
+        });
+
+        user.highestWordCountDictionary = items.slice(0, 5);
+    });
 };
 
 Analyzer.prototype.update = function(user, words, numWords, messageLength) {

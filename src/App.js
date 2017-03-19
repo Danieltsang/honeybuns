@@ -16,9 +16,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showMainApp: false,
-      uploadLoading: false,
-        messageArray: []
+        showMainApp: false,
+        uploadLoading: false,
+        messageArray: [],
+        users: {}
     };
 
     this.upload = this.upload.bind(this);
@@ -27,7 +28,14 @@ class App extends Component {
   upload(e) {
       this.setState({uploadLoading: true});
       let p = new Parse(e);
-      p.parseText((q) => {this.setState({uploadLoading: false, showMainApp: true, messageArray: q})});
+      p.parseText((q, data) => {
+          this.setState({
+              uploadLoading: false,
+              showMainApp: true,
+              messageArray: q,
+              users: data.users
+          })
+      });
   }
 
  render() {
@@ -40,7 +48,7 @@ class App extends Component {
             <MessageArea messageArray={this.state.messageArray}/>
           </Col>
           <Col xs={8} md={8}>
-            <Content topWords={topWords} wordCount={wordCount}/>
+            <Content users={this.state.users}/>
             <DateFilter />
           </Col>
         </Row>
