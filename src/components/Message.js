@@ -12,7 +12,7 @@ class Message extends Component {
           {this.props.message.name+':'}
         </div>
         <div className='msg-message'>
-          {this.props.message.msg}
+          {this.props.message.message}
         </div>
       </div>
     );

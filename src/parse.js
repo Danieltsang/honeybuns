@@ -54,7 +54,7 @@ const Parse = (e) => {
                     console.log("Content: ", content);
                     console.log(a.getAllData());
                     if (callback) {
-                        callback(); // this should call setstate to notify of completion
+                        callback(content); // this should call setstate to notify of completion
                     }
                 },
                 fastMode: true

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button, Grid, Row, Col } from 'react-bootstrap'
 import '../styles/upload-area.css';
 
 class Upload extends Component {
