@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import DateFilter from './DateFilter.js';
 import Parse from './parse';
 import Upload from './components/Upload.js';
 import Message from './components/Message.js';
 import Content from './components/Content.js';
+import DateFilter from './components/DateFilter.js';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Chart from 'chart.js';
 
