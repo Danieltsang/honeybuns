@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
 import TopWordGraph from './TopWordGraph.js';
+import DateFilter from './DateFilter.js';
 import _ from 'underscore';
 
 class Content extends Component {
@@ -25,7 +26,6 @@ class Content extends Component {
     return (
         <Grid>
           <Row className="top-buffer">
-            <h4>Graphs</h4>
             <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
               <Tab className="tab-content" eventKey={1} title="Total messages exchanged">
                   {this.props.userData.totalMessages}
@@ -36,6 +36,10 @@ class Content extends Component {
             </Tabs>
           </Row>
           <Row className="top-buffer">
+              <DateFilter messages={this.props.messages}
+                          filterMessages={this.props.filterMessages}
+                          resetMessages={this.props.resetMessages}
+              />
                 <h4>User Data</h4>
                 <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
                   {this.renderUserTabs()}

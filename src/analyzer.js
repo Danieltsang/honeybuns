@@ -92,7 +92,7 @@ Analyzer.prototype.update = function(user, words, numWords, messageLength, senti
 };
 
 Analyzer.prototype.analyze = function(message) {
-    let colors = ['green', 'blue', 'orange', 'OrangeRed', 'brown', 'pink', 'CadetBlue', 'magenta', 'GreenYellow', 'BlueViolet', 'MediumSlateBlue'];
+    let colors = ['LightGreen', 'LightPink', 'LightSalmon', 'LightSeaGreen', 'LightSkyBlue', 'LightSteelBlue', 'NavajoWhite', 'PaleGreen', 'PaleTurquoise', 'PeachPuff', 'Thistle'];
     let words = {};
     message.message.split(" ").forEach(word => {
         if (words[word]) {
@@ -120,7 +120,9 @@ Analyzer.prototype.analyze = function(message) {
             averageSentiment: sentiment
         };
         userCount = userCount + 1;
-        console.log(userCount);
+        if (userCount > colors.length-1) {
+            userCount = 0
+        }
     } else {
         this.update(this.data.users[message.name], words, numWords, messageLength, sentiment);
     }

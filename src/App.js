@@ -13,13 +13,30 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        showMainApp: false,
-        uploadLoading: false,
-        messageArray: [],
+      showMainApp: false,
+      uploadLoading: false,
+      messageArray: [],
+      messageArrayPermanent: [],
         userData: {}
     };
 
     this.upload = this.upload.bind(this);
+    this.filterMessages = this.filterMessages.bind(this);
+    this.resetMessages = this.resetMessages.bind(this);
+  }
+
+  filterMessages(messages) {
+      this.setState({messageArray: messages});
+  }
+
+  resetMessages() {
+      let msgArray = [];
+      for (var i = 0; i < this.state.messageArrayPermanent.length - 1; i++) {
+          let newMessage = this.state.messageArrayPermanent[i];
+          newMessage.date.local().format("YYYY-MM-DD hh:mm:ss A");
+          msgArray.push(newMessage);
+      }
+      this.setState({messageArray: msgArray});
   }
   
   upload(e) {
@@ -30,6 +47,7 @@ class App extends Component {
               uploadLoading: false,
               showMainApp: true,
               messageArray: q,
+              messageArrayPermanent: q,
               userData: data
           })
       });
@@ -45,8 +63,11 @@ class App extends Component {
             <MessageArea messageArray={this.state.messageArray} users={this.state.userData.users}/>
           </Col>
           <Col xs={8} md={8}>
-            <Content userData={this.state.userData}/>
-            <DateFilter />
+            <Content userData={this.state.userData}
+                     messages={this.state.messageArray}
+                     filterMessages={this.filterMessages}
+                     resetMessages={this.resetMessages}
+            />
           </Col>
         </Row>
       </Grid>
