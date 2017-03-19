@@ -21,6 +21,7 @@ import sentimentAnalysis from 'sentiment-analysis';
  *  }
  * @returns {{getAllData: (function()), update: (function(*, *, *, *)), analyze: (function(*))}}
  */
+let userCount = 0;
 
 function Analyzer() {
     this.data = {
@@ -91,6 +92,7 @@ Analyzer.prototype.update = function(user, words, numWords, messageLength, senti
 };
 
 Analyzer.prototype.analyze = function(message) {
+    let colors = ['green', 'blue', 'orange', 'OrangeRed', 'brown', 'pink', 'CadetBlue', 'magenta', 'GreenYellow', 'BlueViolet', 'MediumSlateBlue'];
     let words = {};
     message.message.split(" ").forEach(word => {
         if (words[word]) {
@@ -114,8 +116,11 @@ Analyzer.prototype.analyze = function(message) {
             sentiments: sentiments,
             averageNumberWordsInMessage: numWords,
             averageMessageLength: messageLength,
+            userColor: colors[userCount],
             averageSentiment: sentiment
         };
+        userCount = userCount + 1;
+        console.log(userCount);
     } else {
         this.update(this.data.users[message.name], words, numWords, messageLength, sentiment);
     }
