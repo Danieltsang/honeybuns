@@ -5,7 +5,18 @@ class Upload extends Component {
   render() {
     return (
       <div>
-        <h2 className='upload-ctn'>HONEY POT</h2>
+        <div className='container-fluid'>
+          <div className='row'>
+            <div className='col-xs-offset-4 col-xs-1'>
+              <div className='logo-container'>
+                <img src={require('../images/hb-logo.png')} alt=''/>
+              </div>
+            </div>
+            <div className='col-xs-1'>
+              <h2>HONEY POT</h2>
+            </div>
+          </div>
+        </div>
         <div className='upload-image-container'>
           <div>
             <h4> Android Text Instructions </h4>

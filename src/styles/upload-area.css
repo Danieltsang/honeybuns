@@ -1,3 +1,14 @@
+.logo-container {
+    text-align:center;
+}
+
+.logo-container img {
+    display:inline-block;
+    margin:0 5px;
+    height: 100px;
+    width: auto;
+}
+
 .upload-image-container {
     display: flex;
     margin-left: 8vw;
@@ -7,7 +18,7 @@
     display: flex;
 }
 
-img {
+.image-container img {
     width: 20vw;
     height: 64vh;
     padding-left: 8px;
