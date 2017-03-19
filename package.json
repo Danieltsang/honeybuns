@@ -25,5 +25,5 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://danieltsang.github.io/honey-buns"
+  "homepage": "https://danieltsang.github.io/honeybuns"
 }
