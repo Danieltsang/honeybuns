@@ -1,0 +1,21 @@
+.message {
+    display: flex;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.msg-date {
+    min-width: 72px;
+    font-size: 12px;
+    line-height: 23px;
+    padding-right: 4px;
+}
+
+.msg-name {
+    font-weight: 700;
+    padding-right: 4px;
+}
+
+.msg-message {
+}
