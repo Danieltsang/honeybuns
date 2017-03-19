@@ -11,7 +11,7 @@
 
 .upload-image-container {
     display: flex;
-    margin-left: 8vw;
+    justify-content: center;
 }
 
 .image-container {
@@ -19,16 +19,16 @@
 }
 
 .image-container img {
-    width: 20vw;
-    height: 64vh;
+    width: auto;
+    height: 400px;
     padding-left: 8px;
     padding-right: 8px;
 }
 
-.upload-btn-ctn {
-    padding-top: 50px;
-}
-
 .upload-ctn {
     margin-left: 43vw;
+}
+
+.text-instructions {
+    text-align: center;
 }
