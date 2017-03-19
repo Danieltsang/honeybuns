@@ -4,7 +4,7 @@ import '../styles/message.css';
 class Message extends Component {
   render() {
     return (
-      <div key= {this.props.index} className='message'>
+      <div key={this.props.index} className='message'>
         <div className='msg-date'>
           {this.props.message.date}
         </div>
