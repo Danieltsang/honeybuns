@@ -1,5 +1,6 @@
 import Message from './message.js';
 import Papa from 'papaparse';
+import Analyzer from './analyzer';
 
 let nthIndex = (str, pat, n) => {
     let L= str.length;
@@ -20,6 +21,7 @@ let nthIndex = (str, pat, n) => {
 const Parse = (e) => {
     let content = [];
     let file = (e.target.files)[0];
+    let a = new Analyzer();
     return {
         parseText: (callback) => {
             Papa.parse(file, {
@@ -32,10 +34,15 @@ const Parse = (e) => {
                     let strings = results.data[0];
                     let dateEnd = nthIndex(strings[1], ":", 3);
                     let nameEnd = nthIndex(strings[1], ":", 4);
+                    if (nameEnd === -1) { // Auto-message: Messages you send to this chat and calls are now secured with end-to-end encryption.
+                        return;
+                    }
                     let date = strings[0] + strings[1].substring(0, dateEnd);
                     let name = strings[1].substring(dateEnd + 2, nameEnd);
                     let message = strings[1].substring(nameEnd + 2, strings[1].length);
                     let m = new Message(date, name, message);
+                    a.getAllData();
+                    a.analyze(m);
                     content.push(m);
                     // console.log("Row data:", results.data);
                     // console.log("Row errors:", results.errors);
@@ -43,6 +50,7 @@ const Parse = (e) => {
                 complete: (results, file) => {
                     console.log("Parsing complete:", results, file);
                     console.log("Content: ", content);
+                    console.log(a.getAllData());
                     if (callback) {
                         callback(); // this should call setstate to notify of completion
                     }
