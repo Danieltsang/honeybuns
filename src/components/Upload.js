@@ -8,7 +8,7 @@ class Upload extends Component {
         <div className='container-fluid'>
           <div className='row'>
               <div className='logo-container'>
-                <h1>HONEY POT</h1>
+                <h1>HONEY BUNS</h1>
                 <img src={require('../images/hb-logo.png')} alt=''/>
               </div>
           </div>
