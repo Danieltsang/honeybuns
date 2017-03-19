@@ -4,6 +4,7 @@ import Parse from './parse';
 import Upload from './components/Upload.js';
 import Message from './components/Message.js';
 import Content from './components/Content.js';
+import DateFilter from './components/DateFilter.js';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Chart from 'chart.js';
 
@@ -93,7 +94,11 @@ class App extends Component {
     //   mainArea = <Upload />;
     // }
     // return mainArea;
-    return this.renderTopWords();
+    return (
+      <div>
+        {this.renderTopWords()}
+        <DateFilter />
+      </div>);
   }
 }
 
