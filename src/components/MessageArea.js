@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import Message from './Message.js'
+import Message from './Message.js';
 import '../styles/message-area.css';
+import _ from 'underscore';
 
 class MessageArea extends Component {
-  
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    let messages = this.props.messageArray.map((msg, i) =>
-      <Message message={msg} key={i} />
-    );
+    let messages = this.props.messageArray.map((msg, i) => {
+      return <Message message={msg} key={i} />;
+    });
     return (
       <div className='message-area-title'>
         <h3>Messages</h3>
