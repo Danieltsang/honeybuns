@@ -6,7 +6,7 @@ import _ from 'underscore';
 class Content extends Component {
     renderUserTabs() {
         let i = 1;
-        return _.map(this.props.users, (value, key) => {
+        return _.map(this.props.userData.users, (value, key) => {
             let tab = (
                 <Tab className="tab-content" eventKey={i} title={key} key={i}>
                     <h4>(Per Message)</h4>
@@ -27,13 +27,11 @@ class Content extends Component {
           <Row className="top-buffer">
             <h4>Graphs</h4>
             <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
-              <Tab className="tab-content" eventKey={1} title="Number of messages per day">
+              <Tab className="tab-content" eventKey={1} title="Total messages exchanged">
+                  {this.props.userData.totalMessages}
               </Tab>
-              <Tab className="tab-content" eventKey={2} title="Sentiment analysis">
-                Sentiment analysis
-              </Tab>
-              <Tab className="tab-content" eventKey={3} title="Peak hours">
-                Peak hours
+              <Tab className="tab-content" eventKey={2} title="Total Word Frequency">
+                  <TopWordGraph words={this.props.userData.allWordCountDictionary}/>
               </Tab>
             </Tabs>
           </Row>
@@ -42,12 +40,6 @@ class Content extends Component {
                 <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
                   {this.renderUserTabs()}
                 </Tabs>
-          </Row>
-          <Row className="top-buffer">
-            <h4>Average message length</h4>
-          </Row>
-          <Row className="top-buffer">
-            <h4>Who uses the most emoji</h4>
           </Row>
         </Grid>
     );

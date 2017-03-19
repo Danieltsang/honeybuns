@@ -7,9 +7,6 @@ import Content from './components/Content.js';
 import DateFilter from './components/DateFilter.js';
 import { Grid, Row, Col } from 'react-bootstrap';
 
-//TODO: replace this with parser
-var topWords = ['I', 'like', 'turtles'];
-var wordCount = {'I': 25, 'like': 10, 'turtles': 5};
 
 class App extends Component {
 
@@ -19,7 +16,7 @@ class App extends Component {
         showMainApp: false,
         uploadLoading: false,
         messageArray: [],
-        users: {}
+        userData: {}
     };
 
     this.upload = this.upload.bind(this);
@@ -33,7 +30,7 @@ class App extends Component {
               uploadLoading: false,
               showMainApp: true,
               messageArray: q,
-              users: data.users
+              userData: data
           })
       });
   }
@@ -48,7 +45,7 @@ class App extends Component {
             <MessageArea messageArray={this.state.messageArray}/>
           </Col>
           <Col xs={8} md={8}>
-            <Content users={this.state.users}/>
+            <Content userData={this.state.userData}/>
             <DateFilter />
           </Col>
         </Row>

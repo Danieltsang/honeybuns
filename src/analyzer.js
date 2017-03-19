@@ -25,7 +25,8 @@ import sentimentAnalysis from 'sentiment-analysis';
 function Analyzer() {
     this.data = {
         users: {},
-        words: {}
+        totalMessages: 0,
+        allWordCountDictionary: []
     };
 }
 
@@ -34,10 +35,19 @@ Analyzer.prototype.getAllData = function() {
 };
 
 Analyzer.prototype.analyzeAllData = function() {
+    let allWords = {};
     _.each(this.data.users, (user) => {
         // Create items array
         let items = Object.keys(user.words).map(function(key) {
             return [key, user.words[key]];
+        });
+
+        _.each(user.words, (val, key) => {
+            if (allWords[key]) {
+                allWords[key] += val;
+            } else {
+                allWords[key] = val;
+            }
         });
 
         // Sort the array based on the second element
@@ -47,6 +57,17 @@ Analyzer.prototype.analyzeAllData = function() {
 
         user.highestWordCountDictionary = items.slice(0, 5);
     });
+
+    let items = Object.keys(allWords).map(function(key) {
+        return [key, allWords[key]];
+    });
+
+    // Sort the array based on the second element
+    items.sort(function(first, second) {
+        return second[1] - first[1];
+    });
+
+    this.data.allWordCountDictionary = items.slice(0, 5);
 };
 
 Analyzer.prototype.update = function(user, words, numWords, messageLength, sentiment) {
@@ -59,7 +80,6 @@ Analyzer.prototype.update = function(user, words, numWords, messageLength, senti
     });
     user.numWords.push(numWords);
     user.messageLengths.push(messageLength);
-
 
     user.averageNumberWordsInMessage = _.reduce(user.numWords, (memo, num) => memo + num, 0) / user.numWords.length;
     user.averageMessageLength = _.reduce(user.messageLengths, (memo, num) => memo + num, 0) / user.messageLengths.length;
@@ -79,6 +99,9 @@ Analyzer.prototype.analyze = function(message) {
             words[word] = 1;
         }
     });
+
+    this.data.totalMessages++;
+
     let numWords = message.message.split(" ").length;
     let messageLength = message.message.length;
     let sentiment = sentimentAnalysis(message.message);
