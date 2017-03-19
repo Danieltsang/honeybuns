@@ -12,6 +12,7 @@ class Content extends Component {
                     <h4>(Per Message)</h4>
                     <h4>Average number of words: {value.averageNumberWordsInMessage}</h4>
                     <h4>Average number of characters: {value.averageMessageLength}</h4>
+                    <h4>Average sentiment: {value.averageSentiment}</h4>
                     <TopWordGraph words={value.highestWordCountDictionary}/>
                 </Tab>
             );
