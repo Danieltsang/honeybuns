@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import sentimentAnalysis from 'sentiment-analysis';
 
 /**
  * User:
@@ -28,7 +29,7 @@ Analyzer.prototype.getAllData = function() {
     return this.data;
 };
 
-Analyzer.prototype.update = function(user, words, numWords, messageLength) {
+Analyzer.prototype.update = function(user, words, numWords, messageLength, sentiment) {
     Object.keys(words).forEach(word => {
         if (user.words[word]) {
             user.words[word] += words[word];
@@ -38,8 +39,10 @@ Analyzer.prototype.update = function(user, words, numWords, messageLength) {
     });
     user.numWords.push(numWords);
     user.messageLengths.push(messageLength);
+    user.sentiments.push(sentiment);
     user.averageNumberWordsInMessage = _.reduce(user.numWords, (memo, num) => memo + num, 0) / user.numWords.length;
     user.averageMessageLength = _.reduce(user.messageLengths, (memo, num) => memo + num, 0) / user.messageLengths.length;
+    user.averageSentiment = _.reduce(user.averageSentiment, (memo, num) => memo + num, 0) / numWords.length;
 };
 
 Analyzer.prototype.analyze = function(message) {
@@ -53,16 +56,19 @@ Analyzer.prototype.analyze = function(message) {
     });
     let numWords = message.message.split(" ").length;
     let messageLength = message.message.length;
+    let sentiment = sentimentAnalysis(message.message);
     if (!this.data.users[message.name]) {
         this.data.users[message.name] = {
             words: words,
             numWords: [numWords],
             messageLengths: [messageLength],
+            sentiments: [sentimentAnalysis(message.message)],
             averageNumberWordsInMessage: numWords,
-            averageMessageLength: messageLength
+            averageMessageLength: messageLength,
+            averageSentiment: sentimentAnalysis(message.message)
         };
     } else {
-        this.update(this.data.users[message.name], words, numWords, messageLength);
+        this.update(this.data.users[message.name], words, numWords, messageLength, sentiment);
     }
 
 };

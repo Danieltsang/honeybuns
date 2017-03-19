@@ -4,9 +4,9 @@ import '../styles/message.css';
 class Message extends Component {
   render() {
     return (
-      <div key={this.props.key} className='message'>
+      <div className='message'>
         <div className='msg-date'>
-          {this.props.message.date}
+          {this.props.message.date.format("ddd, MMM, Do YYYY, h:mm a")}
         </div>
         <div className='msg-name'>
           {this.props.message.name+':'}
