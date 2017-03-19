@@ -5,6 +5,7 @@ import Parse from './parse';
 import Upload from './components/Upload.js';
 import Content from './components/Content.js';
 import DateFilter from './components/DateFilter.js';
+import SentimentAnalysis from './components/SentimentAnalysis.js';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Chart from 'chart.js';
 
@@ -81,6 +82,7 @@ class App extends Component {
   }
 
  render() {
+  <SentimentAnalysis />
     let messageArray = [
       {date: '2017-06-05',name: 'brandon', msg: 'Hi there I just want to inform you that i can type long messages in order to test what will happen when there is stuff that happens and I want some scrollable stuff to happen but i am too lazy to add more messages in order to make the area expand and I am instead trying to make a really long message to make it scroll a little at least but maybe i shouldve used capslocks as the font could be slighlty bigger?'},
       {date: '2017-06-05',name: 'jason', msg: 'O HAI'},
