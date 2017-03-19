@@ -23,5 +23,6 @@
 .msg-message {
     margin-left: 3px;
     max-width: 215px;
-    margin-top: 11px;    
+    margin-top: 11px;
+    word-wrap: break-word;
 }

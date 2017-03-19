@@ -31,7 +31,6 @@ const Parse = (e) => {
                     // Example of results returned in an array
                     // 0: "2017-03-12"
                     // 1: " 9:59:47 AM: Christine Yeung: Dude"
-                    console.log(results);
                     let strings = results.data[0];
                     let dateEnd = nthIndex(strings[1], ":", 3);
                     let nameEnd = nthIndex(strings[1], ":", 4);
@@ -46,12 +45,8 @@ const Parse = (e) => {
                     a.getAllData();
                     a.analyze(m);
                     content.push(m);
-                    // console.log("Row data:", results.data);
-                    // console.log("Row errors:", results.errors);
                 },
                 complete: (results, file) => {
-                    console.log("Parsing complete:", results, file);
-                    console.log("Content: ", content);
                     a.analyzeAllData();
                     if (callback) {
                         callback(content, a.getAllData()); // this should call setstate to notify of completion
