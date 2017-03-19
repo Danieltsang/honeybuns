@@ -20,19 +20,18 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {showMainApp: false};
+    this.state = {
+      showMainApp: false,
+      uploadLoading: false
+    };
 
-    this.onClickUploadBtn = this.onClickUploadBtn.bind(this);
     this.upload = this.upload.bind(this);
-  }
-
-  onClickUploadBtn () {
-    this.setState({showMainApp: true});
   }
   
   upload(e) {
+      this.setState({uploadLoading: true});
       let p = new Parse(e);
-      p.parseText();
+      p.parseText(() => {this.setState({uploadLoading: false, showMainApp: true,})});
   }
 
   topWords(messages) {
@@ -108,8 +107,10 @@ class App extends Component {
         </Row>
       </Grid>
       );
+    } else if(!this.state.uploadLoading) {
+      mainArea = <Upload onClick={this.upload}/>;
     } else {
-      mainArea = <Upload onClick={this.onClickUploadBtn}/>;
+      mainArea = <h1>Loading</h1>;
     }
     return mainArea;
   }

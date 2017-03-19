@@ -1,0 +1,23 @@
+.upload-image-container {
+    display: flex;
+    margin-left: 8vw;
+}
+
+.image-container {
+    display: flex;
+}
+
+img {
+    width: 20vw;
+    height: 64vh;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.upload-btn-ctn {
+    padding-top: 50px;
+}
+
+.upload-ctn {
+    margin-left: 43vw;
+}
