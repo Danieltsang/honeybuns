@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Message from './Message.js'
+import '../styles/message-area.css';
 
 class MessageArea extends Component {
   
@@ -8,8 +9,11 @@ class MessageArea extends Component {
       <Message message={msg} index={i} />
     );
     return (
-      <div className="Message">
-        {messages}
+      <div className='message-area-title'>
+        <h3>Messages</h3>
+        <div className="message-area">
+          {messages}
+        </div>
       </div>
     );
   }

@@ -21,17 +21,17 @@ class App extends Component {
   }
   render() {
     let messageArray = [
-      {date: '2017-06-05',name: 'brandon', msg: 'Hi there'},
+      {date: '2017-06-05',name: 'brandon', msg: 'Hi there I just want to inform you that i can type long messages in order to test what will happen when there is stuff that happens and I want some scrollable stuff to happen but i am too lazy to add more messages in order to make the area expand and I am instead trying to make a really long message to make it scroll a little at least but maybe i shouldve used capslocks as the font could be slighlty bigger?'},
       {date: '2017-06-05',name: 'jason', msg: 'O HAI'},
       {date: '2017-06-05',name: 'brandon', msg: 'your caps is stuck'},
       {date: '2017-06-05',name: 'jason', msg: 'INDEED IT IS'},
       {date: '2017-06-05',name: 'jason', msg: 'DOES IT BOTHER YOU?'},
       {date: '2017-06-05',name: 'brandon', msg: 'yes it does'},
       {date: '2017-06-05',name: 'jason', msg: 'DEAL WITH IT'},
-      {date: '2017-06-05',name: 'brandon', msg: 'I CAN\'T HANDLE THIS MADNESS'},
+      {date: '2017-06-05',name: 'brandon', msg: 'I CAN\'T HANDLE THIS MADNESS AND SO I WILL WRITE A VERY LONG MESSAGE BECAUSE I CAN AND I WANT TO SEE HOW IT WILL RENDER AND FUCK MY STUFF UP OH GOD AM I AFRAID WHAT THIS WILL DO WHY IS THERE NO CHARCTER LIMITS ON WHAT THIS CAN DO THIS IS BULLSHIT WHY MUST THERE BE SO MUCH TEXT BE MORE LIKE TWITTER PLEASE'},
       {date: '2017-06-05',name: 'jason', msg: 'GOOD'},
     ];
-    var mainArea;
+    let mainArea;
     if (this.state.showMainApp) {
       mainArea = (
         <Grid>
