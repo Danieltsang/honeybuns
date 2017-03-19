@@ -31,7 +31,7 @@ class App extends Component {
   upload(e) {
       this.setState({uploadLoading: true});
       let p = new Parse(e);
-      p.parseText(() => {this.setState({uploadLoading: false, showMainApp: true,})});
+      p.parseText(() => {this.setState({uploadLoading: false, showMainApp: true})});
   }
 
   topWords(messages) {
@@ -110,7 +110,11 @@ class App extends Component {
     } else if(!this.state.uploadLoading) {
       mainArea = <Upload onClick={this.upload}/>;
     } else {
-      mainArea = <h1>Loading</h1>;
+      const divStyle = {
+        'marginLeft': '43vw',
+        'marginTop': '50vh'
+      };
+      mainArea = <h1 style={divStyle}>Loading</h1>;
     }
     return mainArea;
   }

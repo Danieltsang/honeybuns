@@ -11,20 +11,20 @@ class Upload extends Component {
           <div>
             <h4> Android Text Instructions </h4>
             <div className='image-container'>
-              <img src={require('../images/android-instruction-1.png')}/>
-              <img src={require('../images/android-instruction-2.png')}/>
+              <img src={require('../images/android-instruction-1.png')} alt=''/>
+              <img src={require('../images/android-instruction-2.png')} alt=''/>
             </div>
           </div>
           <div>
             <h4> iPhone Text Instructions </h4>
             <div className='image-container'>
-              <img src={require('../images/iphone-instruction-1.jpg')}/>
-              <img src={require('../images/iphone-instruction-2.jpg')}/>
+              <img src={require('../images/iphone-instruction-1.jpg')} alt=''/>
+              <img src={require('../images/iphone-instruction-2.jpg')} alt=''/>
             </div>
           </div>
         </div>
         <div className='upload-btn-ctn upload-ctn'>
-          <input type='file' onClick={this.props.onClick}/>
+          <input type='file' onChange={this.props.onClick}/>
         </div>
       </div>
     );

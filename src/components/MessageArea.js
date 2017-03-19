@@ -6,7 +6,7 @@ class MessageArea extends Component {
   
   render() {
     var messages = this.props.messageArray.map((msg, i) =>
-      <Message message={msg} index={i} />
+      <Message message={msg} key={i} />
     );
     return (
       <div className='message-area-title'>
