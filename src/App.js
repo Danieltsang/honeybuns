@@ -7,19 +7,16 @@ import Content from './components/Content.js';
 import DateFilter from './components/DateFilter.js';
 import { Grid, Row, Col } from 'react-bootstrap';
 
-//TODO: replace this with parser
-var topWords = ['I', 'like', 'turtles'];
-var wordCount = {'I': 25, 'like': 10, 'turtles': 5};
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      showMainApp: false,
-      uploadLoading: false,
-      messageArray: [],
-      users: {}
+        showMainApp: false,
+        uploadLoading: false,
+        messageArray: [],
+        userData: {}
     };
 
     this.upload = this.upload.bind(this);
@@ -28,15 +25,14 @@ class App extends Component {
   upload(e) {
       this.setState({uploadLoading: true});
       let p = new Parse(e);
-      p.parseText((q, users) => {
-        this.setState({
-          uploadLoading: false, 
-          showMainApp: true, 
-          messageArray: q,
-          users: users
-        })
+      p.parseText((q, data) => {
+          this.setState({
+              uploadLoading: false,
+              showMainApp: true,
+              messageArray: q,
+              userData: data
+          })
       });
-      console.log(this.state.users);
   }
 
  render() {
@@ -46,10 +42,10 @@ class App extends Component {
         <Grid>
         <Row>
           <Col xs={4} md={4}>
-            <MessageArea messageArray={this.state.messageArray} users={this.state.users}/>
+            <MessageArea messageArray={this.state.messageArray} users={this.state.userData.users}/>
           </Col>
           <Col xs={8} md={8}>
-            <Content topWords={topWords} wordCount={wordCount}/>
+            <Content userData={this.state.userData}/>
             <DateFilter />
           </Col>
         </Row>

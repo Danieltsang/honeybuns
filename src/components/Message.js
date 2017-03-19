@@ -9,7 +9,7 @@ class Message extends Component {
           <div className='msg-date'>
             {this.props.message.date.format("ddd, MMM Do YYYY, h:mm a")}
           </div>
-          <div className='msg-name'>
+          <div className='msg-name' styles={{backgroundColor:this.props.userColor}}>
             {this.props.message.name+':'}
           </div>
          </div>
