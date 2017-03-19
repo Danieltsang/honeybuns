@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import '.'
-import Upload from './components/Upload.js'
-import Message from './components/Message.js'
-import Content from './components/Content.js'
-import { Grid, Row, Col } from 'react-bootstrap'
+import Parse from './parse';
+import Upload from './components/Upload.js';
+import Message from './components/Message.js';
+import Content from './components/Content.js';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {
     super(props);
   
     this.state = {showMainApp: false};
+
+    this.upload = this.upload.bind(this);
   }
+
+  upload(e) {
+      let p = new Parse(e);
+      p.parseText();
+  }
+
   render() {
-    var mainArea;
+    let mainArea;
     if (this.state.showMainApp) {
       mainArea = (
         <Grid>
@@ -31,7 +38,12 @@ class App extends Component {
     } else {
       mainArea = <Upload />;
     }
-    return mainArea;
+    return (
+        <div>
+            <input type="file" onChange={this.upload}/>
+            {mainArea}
+        </div>
+    );
   }
 }
 
