@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
 import TopWordGraph from './TopWordGraph.js';
+import DateFilter from './DateFilter.js';
 
 class Content extends Component {
 
@@ -23,13 +24,10 @@ class Content extends Component {
             </Tabs>
           </Row>
           <Row className="top-buffer">
-            <h4>Most used words</h4>
-          </Row>
-          <Row className="top-buffer">
-            <h4>Average message length</h4>
-          </Row>
-          <Row className="top-buffer">
-            <h4>Who uses the most emoji</h4>
+              <DateFilter messages={this.props.messages}
+                          filterMessages={this.props.filterMessages}
+                          resetMessages={this.props.resetMessages}
+              />
           </Row>
         </Grid>
     );

@@ -18,16 +18,34 @@ class App extends Component {
     this.state = {
       showMainApp: false,
       uploadLoading: false,
-        messageArray: []
+      messageArray: [],
+      messageArrayPermanent: []
     };
 
     this.upload = this.upload.bind(this);
+    this.filterMessages = this.filterMessages.bind(this);
+    this.resetMessages = this.resetMessages.bind(this);
+  }
+
+  filterMessages(messages) {
+      this.setState({messageArray: messages});
+  }
+
+  resetMessages() {
+      this.setState({messageArray: this.state.messageArrayPermanent});
   }
   
   upload(e) {
       this.setState({uploadLoading: true});
       let p = new Parse(e);
-      p.parseText((q) => {this.setState({uploadLoading: false, showMainApp: true, messageArray: q})});
+      p.parseText((q) => {
+          this.setState({
+              uploadLoading: false,
+              showMainApp: true,
+              messageArray: q,
+              messageArrayPermanent: q
+          })
+      });
   }
 
  render() {
@@ -40,8 +58,12 @@ class App extends Component {
             <MessageArea messageArray={this.state.messageArray}/>
           </Col>
           <Col xs={8} md={8}>
-            <Content topWords={topWords} wordCount={wordCount}/>
-            <DateFilter />
+            <Content topWords={topWords}
+                     wordCount={wordCount}
+                     messages={this.state.messageArray}
+                     filterMessages={this.filterMessages}
+                     resetMessages={this.resetMessages}
+            />
           </Col>
         </Row>
       </Grid>
