@@ -42,7 +42,7 @@ class App extends Component {
         <Grid>
         <Row>
           <Col xs={4} md={4}>
-            <MessageArea messageArray={this.state.messageArray}/>
+            <MessageArea messageArray={this.state.messageArray} users={this.state.userData.users}/>
           </Col>
           <Col xs={8} md={8}>
             <Content userData={this.state.userData}/>
