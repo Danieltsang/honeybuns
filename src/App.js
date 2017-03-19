@@ -9,7 +9,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import Chart from 'chart.js';
 
 //TODO: replace this with parser
-var messages = [
+let messages = [
     {'date':'???', 'user':'Steve', 'message':'I like turtles'},
     {'date':'???', 'user':'Martin', 'message':'Me too!'},
     {'date':'???', 'user':'Steve', 'message':'No, like, I REALLY like turtles...'},
@@ -37,8 +37,8 @@ class App extends Component {
   topWords(messages) {
     //TODO: pick out the top used words from the messages array
 
-    var topWords = ['I', 'like', 'turtles'];
-    var wordCount = {'I': 25, 'like': 10, 'turtles': 5};
+    let topWords = ['I', 'like', 'turtles'];
+    let wordCount = {'I': 25, 'like': 10, 'turtles': 5};
 
     return [topWords, wordCount];
   }
@@ -46,18 +46,18 @@ class App extends Component {
   renderTopWords(messages) {
     const BarChart = require("react-chartjs").Bar;
 
-    var temp = this.topWords(messages);
-    var topWords = temp[0];
-    var wordCount = temp[1];
+    let temp = this.topWords(messages);
+    let topWords = temp[0];
+    let wordCount = temp[1];
 
-    var labels_arr = [];
-    var data_arr = [];
-    var arrayLength = topWords.length;
-    for (var i = 0; i < arrayLength; i++) {
+    let labels_arr = [];
+    let data_arr = [];
+    let arrayLength = topWords.length;
+    for (let i = 0; i < arrayLength; i++) {
       labels_arr.push(topWords[i]);
       data_arr.push(wordCount[topWords[i]]);
     }
-    var barChartData = {
+    let barChartData = {
       labels: labels_arr,
       datasets: [{
         label: 'Most Frequent Words',
@@ -66,7 +66,7 @@ class App extends Component {
       }]
     };
 
-    var barChartOptions = {
+    let barChartOptions = {
       scales: {
         yAxes: [{
           ticks: {
