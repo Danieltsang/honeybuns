@@ -5,7 +5,7 @@ class Upload extends Component {
   render() {
     return (
       <Row>
-        <Button bsStyle="primary" bsSize="large">Upload a text file</Button>
+        <Button bsStyle="primary" bsSize="large" onClick={this.props.onClick}>Upload a text file</Button>
       </Row>
     );
   }
