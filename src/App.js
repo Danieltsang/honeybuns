@@ -13,14 +13,29 @@ import './App.css';
 // }]
 
 class App extends Component {
-  getFormData(){ 
-    var start=document.getElementById('start').value;
-    var end=document.getElementById('end').value;
-    /* some other fields */
-    /* now call ur function by passing the above values */
-    filterByDateRange(start, end);
+
+  constructor (props) {
+    super(props);
+
+    this.state={startDate: null};
+    this.state={endDate: null};
+
+    this.setStartDate = this.setStartDate.bind(this);
+    this.setEndDate = this.setEndDate.bind(this);
+    this.filterByDateRange = this.filterByDateRange.bind(this);
   }
-  filterByDateRange(start, end) {
+  // getFormData(){ 
+  //   var start=document.getElementById('start').value;
+  //   var end=document.getElementById('end').value;
+  //   /* some other fields */
+  //   /* now call ur function by passing the above values */
+  //   filterByDateRange(start, end);
+  // }
+  filterByDateRange() {
+      console.log(this.state.startDate);
+      console.log(this.state.endDate);
+      var start = this.state.startDate;
+      var end = this.state.endDate;
       var result = [];
       var messages = [];
       for (var i = messages.length - 1; i >= 0; i--) {
@@ -29,8 +44,16 @@ class App extends Component {
         }
       }
       console.log(result);
-      return result;
   }
+
+  setStartDate (e) {
+    this.setState({startDate: e.target.value})
+  }
+
+  setEndDate (e) {
+    this.setState({endDate: e.target.value})
+  }
+
   render() {
     return (
       <div className="App">
@@ -44,13 +67,13 @@ class App extends Component {
         <form>
   <label>
     start:
-    <input type="date" name="start" />
+    <input type="date" name="start" onChange={this.setStartDate}/>
   </label>
   <label>
     end:
-    <input type="date" name="end" />
+    <input type="date" name="end" onChange={this.setEndDate}/>
   </label>
-  <input type="submit" value="Submit" onclick="getFormData()" />
+  <button onClick={this.filterByDateRange}> Submit! </button>
 </form>
       </div>
     );
