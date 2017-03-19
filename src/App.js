@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import moment from 'moment';
+
 var messages = [
   {
     "date": "2017-03-12, 9:59:47 AM",
@@ -13,7 +15,7 @@ var messages = [
     "msg": "oh man"
   }
 ]
-
+// 2017-03-12, 9:59:47 AM
 class App extends Component {
   constructor (props) {
     super(props);
@@ -26,14 +28,14 @@ class App extends Component {
   }
   filterByDateRange(e) {
       e.preventDefault();
-      var start = new Date(this.state.startDate);
-      var end = new Date(this.state.endDate);
+      var start = moment.utc(this.state.startDate);
+      var end = moment.utc(this.state.endDate);
       console.log(this.state.startDate);
       console.log(this.state.endDate);
       var result = [];
       for (var i = messages.length - 1; i >= 0; i--) {
-        var messageDate = new Date(messages[i].date);
-        if (messageDate <= end && messageDate >= start) {
+        var messageDate = moment.utc(messages[i].date);
+        if (messageDate.isBetween(start, end)) {
           result.push(messages[i]);
         }
       }
