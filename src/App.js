@@ -7,9 +7,6 @@ import Content from './components/Content.js';
 import DateFilter from './components/DateFilter.js';
 import { Grid, Row, Col } from 'react-bootstrap';
 
-//TODO: replace this with parser
-var topWords = ['I', 'like', 'turtles'];
-var wordCount = {'I': 25, 'like': 10, 'turtles': 5};
 
 class App extends Component {
 
@@ -19,7 +16,8 @@ class App extends Component {
       showMainApp: false,
       uploadLoading: false,
       messageArray: [],
-      messageArrayPermanent: []
+      messageArrayPermanent: [],
+        userData: {}
     };
 
     this.upload = this.upload.bind(this);
@@ -32,18 +30,25 @@ class App extends Component {
   }
 
   resetMessages() {
-      this.setState({messageArray: this.state.messageArrayPermanent});
+      let msgArray = [];
+      for (var i = 0; i < this.state.messageArrayPermanent.length - 1; i++) {
+          let newMessage = this.state.messageArrayPermanent[i];
+          newMessage.date.local().format("YYYY-MM-DD hh:mm:ss A");
+          msgArray.push(newMessage);
+      }
+      this.setState({messageArray: msgArray});
   }
   
   upload(e) {
       this.setState({uploadLoading: true});
       let p = new Parse(e);
-      p.parseText((q) => {
+      p.parseText((q, data) => {
           this.setState({
               uploadLoading: false,
               showMainApp: true,
               messageArray: q,
-              messageArrayPermanent: q
+              messageArrayPermanent: q,
+              userData: data
           })
       });
   }
@@ -58,8 +63,7 @@ class App extends Component {
             <MessageArea messageArray={this.state.messageArray}/>
           </Col>
           <Col xs={8} md={8}>
-            <Content topWords={topWords}
-                     wordCount={wordCount}
+            <Content userData={this.state.userData}
                      messages={this.state.messageArray}
                      filterMessages={this.filterMessages}
                      resetMessages={this.resetMessages}

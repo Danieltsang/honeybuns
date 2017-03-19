@@ -32,14 +32,16 @@ class DateFilter extends Component {
   filterByDateRange(e) {
       e.preventDefault();
       var start = moment.utc(this.state.startDate);
-      var end = moment.utc(this.state.endDate);
+      var end = moment.utc(this.state.endDate).add(1, 'd');
       console.log(this.state.startDate);
       console.log(this.state.endDate);
       var result = [];
       for (var i = 0; i < this.props.messages.length - 1; i++) {
-        var messageDate = moment.utc(this.props.messages[i].date);
-        if (messageDate.isBetween(start, end)) {
-          result.push(this.props.messages[i]);
+        var messageDate = moment.utc(this.props.messages[i].date.local().format("YYYY-MM-DD hh:mm:ss A"));
+        if (messageDate.isBetween(start.local().format("YYYY-MM-DD hh:mm:ss A"), end.local().format("YYYY-MM-DD hh:mm:ss A"))) {
+          let newMessage = this.props.messages[i];
+          newMessage.date.local().format("YYYY-MM-DD hh:mm:ss A");
+          result.push(newMessage);
         }
       }
       console.log(result);

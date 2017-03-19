@@ -52,9 +52,9 @@ const Parse = (e) => {
                 complete: (results, file) => {
                     console.log("Parsing complete:", results, file);
                     console.log("Content: ", content);
-                    console.log(a.getAllData());
+                    a.analyzeAllData();
                     if (callback) {
-                        callback(content); // this should call setstate to notify of completion
+                        callback(content, a.getAllData()); // this should call setstate to notify of completion
                     }
                 },
                 fastMode: true
