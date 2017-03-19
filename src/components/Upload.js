@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Row, Col } from 'react-bootstrap'
+import { Button, Row } from 'react-bootstrap';
 
 class Upload extends Component {
   render() {
