@@ -1,6 +1,7 @@
 import Message from './message.js';
 import Papa from 'papaparse';
 import Analyzer from './analyzer';
+import moment from 'moment';
 
 let nthIndex = (str, pat, n) => {
     let L= str.length;
@@ -37,7 +38,8 @@ const Parse = (e) => {
                     if (nameEnd === -1) { // Auto-message: Messages you send to this chat and calls are now secured with end-to-end encryption.
                         return;
                     }
-                    let date = strings[0] + strings[1].substring(0, dateEnd);
+                    let stringDate = strings[0] + strings[1].substring(0, dateEnd);
+                    let date = moment(stringDate, "YYYY-MM-DD hh:mm:ss A");
                     let name = strings[1].substring(dateEnd + 2, nameEnd);
                     let message = strings[1].substring(nameEnd + 2, strings[1].length);
                     let m = new Message(date, name, message);
