@@ -18,7 +18,7 @@ class MessageArea extends Component {
     });
     return (
       <div className='message-area-title'>
-        <h3>Messages</h3>
+        <h4>Messages</h4>
         <div className="message-area">
           {messages}
         </div>

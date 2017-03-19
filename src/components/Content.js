@@ -2,9 +2,20 @@ import React, { Component } from 'react';
 import { Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
 import TopWordGraph from './TopWordGraph.js';
 import DateFilter from './DateFilter.js';
+import SearchBar from './SearchBar.js';
 import _ from 'underscore';
 
 class Content extends Component {
+    constructor(props) {
+        super(props);
+
+        this.clickResetButton = this.clickResetButton.bind(this);
+    }
+
+    clickResetButton () {
+        this.props.resetMessages();
+    }
+
     renderUserTabs() {
         let i = 1;
         return _.map(this.props.userData.users, (value, key) => {
@@ -25,7 +36,7 @@ class Content extends Component {
   render() {
     return (
         <Grid>
-          <Row className="top-buffer">
+          <Row>
             <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
               <Tab className="tab-content" eventKey={1} title="Total messages exchanged">
                   {this.props.userData.totalMessages}
@@ -38,8 +49,11 @@ class Content extends Component {
           <Row className="top-buffer">
               <DateFilter messages={this.props.messages}
                           filterMessages={this.props.filterMessages}
-                          resetMessages={this.props.resetMessages}
               />
+              <button onClick={this.clickResetButton}> Reset! </button>
+              <SearchBar messageList={this.props.messages} 
+                         filterMessages={this.props.filterMessages}
+               />
                 <h4>User Data</h4>
                 <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
                   {this.renderUserTabs()}

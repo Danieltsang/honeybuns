@@ -20,14 +20,12 @@ class DateFilter extends Component {
 
     this.state={
         startDate: null,
-        endDate: null,
-        resetButton: false
+        endDate: null
     };
 
     this.setStartDate = this.setStartDate.bind(this);
     this.setEndDate = this.setEndDate.bind(this);
     this.filterByDateRange = this.filterByDateRange.bind(this);
-    this.clickResetButton = this.clickResetButton.bind(this);
   }
   filterByDateRange(e) {
       e.preventDefault();
@@ -57,32 +55,20 @@ class DateFilter extends Component {
     this.setState({endDate: e.target.value})
   }
 
-  clickResetButton () {
-      this.setState({resetButton: false});
-      this.props.resetMessages();
-  }
-
   render() {
-    let area;
-
-    if(!this.state.resetButton) {
-        area =  (<form>
-            <label>
-                start:
-                <input type="date" name="start" onChange={this.setStartDate}/>
-            </label>
-            <label>
-                end:
-                <input type="date" name="end" onChange={this.setEndDate}/>
-            </label>
-            <button onClick={this.filterByDateRange}> Submit! </button>
-        </form>);
-    } else {
-        area = <button onClick={this.clickResetButton}> Reset! </button>;
-    }
     return (
       <div className="DateFilter">
-          {area}
+          <form>
+            <label>
+                Start:
+                <input type="date" name="Start" onChange={this.setStartDate}/>
+            </label>
+            <label>
+                End:
+                <input type="date" name="End" onChange={this.setEndDate}/>
+            </label>
+            <button onClick={this.filterByDateRange}> Submit! </button>
+        </form>
       </div>
     );
   }

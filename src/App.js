@@ -17,7 +17,7 @@ class App extends Component {
       uploadLoading: false,
       messageArray: [],
       messageArrayPermanent: [],
-        userData: {}
+      userData: {}
     };
 
     this.upload = this.upload.bind(this);
@@ -26,57 +26,58 @@ class App extends Component {
   }
 
   filterMessages(messages) {
-      this.setState({messageArray: messages});
+    this.setState({ messageArray: messages });
   }
 
   resetMessages() {
-      let msgArray = [];
-      for (var i = 0; i < this.state.messageArrayPermanent.length - 1; i++) {
-          let newMessage = this.state.messageArrayPermanent[i];
-          newMessage.date.local().format("YYYY-MM-DD hh:mm:ss A");
-          msgArray.push(newMessage);
-      }
-      this.setState({messageArray: msgArray});
-  }
-  
-  upload(e) {
-      this.setState({uploadLoading: true});
-      let p = new Parse(e);
-      p.parseText((q, data) => {
-          this.setState({
-              uploadLoading: false,
-              showMainApp: true,
-              messageArray: q,
-              messageArrayPermanent: q,
-              userData: data
-          })
-      });
+    let msgArray = [];
+    for (var i = 0; i < this.state.messageArrayPermanent.length - 1; i++) {
+      let newMessage = this.state.messageArrayPermanent[i];
+      newMessage.date.local().format("YYYY-MM-DD hh:mm:ss A");
+      msgArray.push(newMessage);
+    }
+    this.setState({ messageArray: msgArray });
   }
 
- render() {
+  upload(e) {
+    this.setState({ uploadLoading: true });
+    let p = new Parse(e);
+    p.parseText((q, data) => {
+      this.setState({
+        uploadLoading: false,
+        showMainApp: true,
+        messageArray: q,
+        messageArrayPermanent: q,
+        userData: data
+      })
+    });
+  }
+
+  render() {
     let mainArea;
     if (this.state.showMainApp) {
       mainArea = (
         <Grid>
-        <Row>
-          <Col xs={4} md={4}>
-            <MessageArea messageArray={this.state.messageArray} users={this.state.userData.users}/>
-          </Col>
-          <Col xs={8} md={8}>
-            <Content userData={this.state.userData}
-                     messages={this.state.messageArray}
-                     filterMessages={this.filterMessages}
-                     resetMessages={this.resetMessages}
-            />
+          <Row>
+            <Col xs={4} md={4}>
+              <MessageArea messageArray={this.state.messageArray} users={this.state.userData.users} />
+            </Col>
+            <Col xs={8} md={8}>
+               <h4>Analysis</h4>
+                <Content userData={this.state.userData}
+                  messages={this.state.messageArray}
+                  filterMessages={this.filterMessages}
+                  resetMessages={this.resetMessages}
+                />
           </Col>
         </Row>
       </Grid>
-      );
+          );
     } else if(!this.state.uploadLoading) {
-      mainArea = <Upload onClick={this.upload}/>;
-    } else {
+            mainArea = <Upload onClick={this.upload} />;
+          } else {
       const divStyle = {
-        'marginLeft': '43vw',
+            'marginLeft': '43vw',
         'marginTop': '50vh'
       };
       mainArea = <h1 style={divStyle}>Loading</h1>;
