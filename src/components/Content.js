@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
-
-
+import TopWordGraph from './TopWordGraph.js';
 
 class Content extends Component {
 
@@ -12,7 +11,8 @@ class Content extends Component {
             <h4>Graphs</h4>
             <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
               <Tab className="tab-content" eventKey={1} title="Number of messages per day">
-                Number of messages per day
+                  <TopWordGraph topWords={this.props.topWords} wordCount={this.props.wordCount}/>
+
               </Tab>
               <Tab className="tab-content" eventKey={2} title="Sentiment analysis">
                 Sentiment analysis
