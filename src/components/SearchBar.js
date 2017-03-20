@@ -11,19 +11,15 @@ class SearchBar extends Component {
   }
 
   filterForSearchedWord() {
-      let msgArray = [];
-      this.props.messageList.map((msg, i) => {
-          if(msg.message.includes(this.state.value)) {
-              msgArray.push(msg);
-          }
+      let msgArray = this.props.messageList.filter(msg => {
+          return msg.message.includes(this.state.value);
       });
       this.props.filterMessages(msgArray);
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});
-    console.log(this.state.value);
-    if(this.state.value == '') {
+    if(this.state.value === '') {
           this.props.resetMessages();
       }
   }
@@ -37,7 +33,7 @@ class SearchBar extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Search:
+          Conversation Search:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Search!" />

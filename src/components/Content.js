@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Grid, Row } from 'react-bootstrap';
 import TopWordGraph from './TopWordGraph.js';
-import DateFilter from './DateFilter.js';
+// import DateFilter from './DateFilter.js';
 import SearchBar from './SearchBar.js';
 import _ from 'underscore';
 
@@ -52,14 +52,17 @@ class Content extends Component {
             </Tabs>
           </Row>
           <Row className="top-buffer">
-              <button onClick={this.clickResetButton}> Reset! </button>
-              <SearchBar messageList={this.props.messages} 
-                         filterMessages={this.props.filterMessages}
-               />
+              <div className="search-bar">
+                  <SearchBar
+                      messageList={this.props.messages}
+                      filterMessages={this.props.filterMessages}
+                      resetMessages={this.clickResetButton}/>
+                  <button onClick={this.clickResetButton}> Reset</button>
+              </div>
                 <h4>User Data</h4>
                 <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
-                  {this.renderUserTabs()}
-                </Tabs>
+                {this.renderUserTabs()}
+            </Tabs>
           </Row>
         </Grid>
     );

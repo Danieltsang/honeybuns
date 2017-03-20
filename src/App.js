@@ -31,13 +31,7 @@ class App extends Component {
   }
 
   resetMessages() {
-    let msgArray = [];
-    for (let i = 0; i < this.state.messageArrayPermanent.length - 1; i++) {
-      let newMessage = this.state.messageArrayPermanent[i];
-      newMessage.date.local().format("YYYY-MM-DD hh:mm:ss A");
-      msgArray.push(newMessage);
-    }
-    this.setState({ messageArray: msgArray });
+    this.setState({ messageArray: this.state.messageArrayPermanent.slice() });
   }
 
   upload(e) {
@@ -47,6 +41,7 @@ class App extends Component {
           this.setState({
               uploadLoading: false,
               showMainApp: true,
+              messageArrayPermanent: q,
               messageArray: q,
               userData: data,
               startDate: q[0].date,

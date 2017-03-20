@@ -1,18 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-let messages = [
-  {
-    "date": "2017-03-12, 9:59:47 AM",
-    "name": "asdasdasd",
-    "msg": "Dude"
-  },
-  {
-    "date": "2017-03-12, 12:09:51 PM",
-    "name": "asdasdasd",
-    "msg": "oh man"
-  }
-];
 // 2017-03-12, 9:59:47 AM
 class DateFilter extends Component {
   constructor (props) {
