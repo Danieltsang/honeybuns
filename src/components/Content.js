@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
+import { Tabs, Tab, Grid, Row } from 'react-bootstrap';
 import TopWordGraph from './TopWordGraph.js';
 import _ from 'underscore';
 

@@ -4,10 +4,12 @@ import '../styles/message-area.css';
 import _ from 'underscore';
 
 class MessageArea extends Component {
-  constructor(props) {
-    super(props);
+  renderDateRange() {
+    if (this.props.startDate === this.props.endDate) {
+      return this.props.endDate;
+    }
+    return this.props.startDate + " - " + this.props.endDate;
   }
-
   render() {
     let messages = this.props.messageArray.map((msg, i) => {
       let color = 'white';
@@ -18,7 +20,7 @@ class MessageArea extends Component {
     });
     return (
       <div className='message-area-title'>
-        <h3>Messages</h3>
+        <h3>Messages ({this.renderDateRange()})</h3>
         <div className="message-area">
           {messages}
         </div>

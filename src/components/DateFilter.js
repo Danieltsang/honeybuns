@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-var messages = [
+let messages = [
   {
     "date": "2017-03-12, 9:59:47 AM",
-    "name": "Christine Yeung",
+    "name": "asdasdasd",
     "msg": "Dude"
   },
   {
     "date": "2017-03-12, 12:09:51 PM",
-    "name": "Danyull",
+    "name": "asdasdasd",
     "msg": "oh man"
   }
-]
+];
 // 2017-03-12, 9:59:47 AM
 class DateFilter extends Component {
   constructor (props) {
@@ -26,13 +26,13 @@ class DateFilter extends Component {
   }
   filterByDateRange(e) {
       e.preventDefault();
-      var start = moment.utc(this.state.startDate);
-      var end = moment.utc(this.state.endDate);
+      let start = moment.utc(this.state.startDate);
+      let end = moment.utc(this.state.endDate);
       console.log(this.state.startDate);
       console.log(this.state.endDate);
-      var result = [];
-      for (var i = messages.length - 1; i >= 0; i--) {
-        var messageDate = moment.utc(messages[i].date);
+      let result = [];
+      for (let i = messages.length - 1; i >= 0; i--) {
+        let messageDate = moment.utc(messages[i].date);
         if (messageDate.isBetween(start, end)) {
           result.push(messages[i]);
         }

@@ -85,14 +85,14 @@ Analyzer.prototype.update = function(user, words, numWords, messageLength, senti
     user.averageNumberWordsInMessage = _.reduce(user.numWords, (memo, num) => memo + num, 0) / user.numWords.length;
     user.averageMessageLength = _.reduce(user.messageLengths, (memo, num) => memo + num, 0) / user.messageLengths.length;
 
-    if (sentiment != 0) {
+    if (sentiment !== 0) {
         user.sentiments.push(sentiment);
         user.averageSentiment = _.reduce(user.sentiments, (memo, num) => memo + num, 0) *1.0/ user.sentiments.length;
     }
 };
 
 Analyzer.prototype.analyze = function(message) {
-    let colors = ['green', 'blue', 'orange', 'OrangeRed', 'brown', 'pink', 'CadetBlue', 'magenta', 'GreenYellow', 'BlueViolet', 'MediumSlateBlue'];
+    let colors = ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)', 'rgba(192,192,192,0.3)', 'rgba(255,255,0,0.3)', 'rgba(255,0,255,0.3)', 'rgba(100,140,250,0.3)', 'rgba(241,190,255,0.3)', 'rgba(0,0,70,0.3)', 'rgba(255,90,70,0.3)', 'rgba(12,90,12,0.3)'];
     let words = {};
     message.message.split(" ").forEach(word => {
         if (words[word]) {
@@ -119,8 +119,7 @@ Analyzer.prototype.analyze = function(message) {
             userColor: colors[userCount],
             averageSentiment: sentiment
         };
-        userCount = userCount + 1;
-        console.log(userCount);
+        userCount += 1;
     } else {
         this.update(this.data.users[message.name], words, numWords, messageLength, sentiment);
     }

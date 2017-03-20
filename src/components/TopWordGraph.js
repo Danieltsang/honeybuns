@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button, Row } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 
 class TopWordGraph extends Component {

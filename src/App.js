@@ -4,7 +4,6 @@ import MessageArea from './components/MessageArea.js'
 import Parse from './parse';
 import Upload from './components/Upload.js';
 import Content from './components/Content.js';
-import DateFilter from './components/DateFilter.js';
 import { Grid, Row, Col } from 'react-bootstrap';
 
 
@@ -16,7 +15,9 @@ class App extends Component {
         showMainApp: false,
         uploadLoading: false,
         messageArray: [],
-        userData: {}
+        userData: {},
+        startDate: "",
+        endDate: ""
     };
 
     this.upload = this.upload.bind(this);
@@ -30,7 +31,9 @@ class App extends Component {
               uploadLoading: false,
               showMainApp: true,
               messageArray: q,
-              userData: data
+              userData: data,
+              startDate: q[0].date,
+              endDate: q[q.length - 1].date
           })
       });
   }
@@ -42,11 +45,14 @@ class App extends Component {
         <Grid>
         <Row>
           <Col xs={4} md={4}>
-            <MessageArea messageArray={this.state.messageArray} users={this.state.userData.users}/>
+            <MessageArea
+                messageArray={this.state.messageArray}
+                users={this.state.userData.users}
+                startDate={this.state.startDate.format("MMMM YYYY")}
+                endDate={this.state.endDate.format("MMMM YYYY")}/>
           </Col>
           <Col xs={8} md={8}>
             <Content userData={this.state.userData}/>
-            <DateFilter />
           </Col>
         </Row>
       </Grid>
