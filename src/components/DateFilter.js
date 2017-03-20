@@ -18,7 +18,10 @@ class DateFilter extends Component {
   constructor (props) {
     super(props);
 
-    this.state={startDate: null, endDate: null};
+    this.state={
+        startDate: null,
+        endDate: null
+    };
 
     this.setStartDate = this.setStartDate.bind(this);
     this.setEndDate = this.setEndDate.bind(this);
@@ -27,17 +30,21 @@ class DateFilter extends Component {
   filterByDateRange(e) {
       e.preventDefault();
       let start = moment.utc(this.state.startDate);
-      let end = moment.utc(this.state.endDate);
+      let end = moment.utc(this.state.endDate).add(1, 'd');
       console.log(this.state.startDate);
       console.log(this.state.endDate);
       let result = [];
-      for (let i = messages.length - 1; i >= 0; i--) {
-        let messageDate = moment.utc(messages[i].date);
-        if (messageDate.isBetween(start, end)) {
-          result.push(messages[i]);
+      for (let i = 0; i < this.props.messages.length - 1; i++) {
+        let messageDate = moment.utc(this.props.messages[i].date.local().format("YYYY-MM-DD hh:mm:ss A"));
+        if (messageDate.isBetween(start.local().format("YYYY-MM-DD hh:mm:ss A"), end.local().format("YYYY-MM-DD hh:mm:ss A"))) {
+          let newMessage = this.props.messages[i];
+          newMessage.date.local().format("YYYY-MM-DD hh:mm:ss A");
+          result.push(newMessage);
         }
       }
       console.log(result);
+      this.setState({resetButton: true});
+      this.props.filterMessages(result);
   }
 
   setStartDate (e) {
@@ -51,17 +58,17 @@ class DateFilter extends Component {
   render() {
     return (
       <div className="DateFilter">
-        <form>
-        <label>
-          start:
-          <input type="date" name="start" onChange={this.setStartDate}/>
-        </label>
-        <label>
-          end:
-          <input type="date" name="end" onChange={this.setEndDate}/>
-        </label>
-        <button onClick={this.filterByDateRange}> Submit! </button>
-      </form>
+          <form>
+            <label>
+                Start:
+                <input type="date" name="Start" onChange={this.setStartDate}/>
+            </label>
+            <label>
+                End:
+                <input type="date" name="End" onChange={this.setEndDate}/>
+            </label>
+            <button onClick={this.filterByDateRange}> Submit! </button>
+        </form>
       </div>
     );
   }

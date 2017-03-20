@@ -120,6 +120,9 @@ Analyzer.prototype.analyze = function(message) {
             averageSentiment: sentiment
         };
         userCount += 1;
+        if (userCount > colors.length-1) {
+            userCount = 0
+        }
     } else {
         this.update(this.data.users[message.name], words, numWords, messageLength, sentiment);
     }
