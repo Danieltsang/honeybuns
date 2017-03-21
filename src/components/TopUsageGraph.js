@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
 
-class TopWordGraph extends Component {
+class TopUsageGraph extends Component {
     render() {
         let labels_arr = [];
         let data_arr = [];
-        let arrayLength = this.props.words.length;
+        let arrayLength = this.props.dict.length;
         for (let i = 0; i < arrayLength; i++) {
-          labels_arr.push(this.props.words[i][0]);
-          data_arr.push(this.props.words[i][1]);
+          labels_arr.push(this.props.dict[i][0]);
+          data_arr.push(this.props.dict[i][1]);
         }
 
         const barChartData = {
           labels: labels_arr,
           datasets: [{
-              label: 'Most Frequent Words',
+              label: 'Most Used ' + this.props.value,
               data: data_arr,
               backgroundColor: 'rgba(255,99,132,0.2)',
               borderColor: 'rgba(255,99,132,1)',
@@ -29,8 +29,6 @@ class TopWordGraph extends Component {
                     maintainAspectRatio={false}
                     data={barChartData}
                     options={{
-                        responsive: false,
-
                         scales: {
                             yAxes: [{
                                 ticks: {
@@ -44,4 +42,9 @@ class TopWordGraph extends Component {
     }
 }
 
-export default TopWordGraph;
+TopUsageGraph.propTypes = {
+    dict: React.PropTypes.array.isRequired,
+    value: React.PropTypes.string.isRequired
+};
+
+export default TopUsageGraph;

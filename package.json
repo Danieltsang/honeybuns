@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.5.0",
+    "compromise": "^8.0.2",
     "gh-pages": "^0.12.0",
     "moment": "^2.18.0",
     "papaparse": "^4.2.0",

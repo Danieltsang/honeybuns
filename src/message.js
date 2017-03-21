@@ -11,22 +11,22 @@ function Message(date, name, message) {
 }
 
 Message.prototpe = {
-    getDate: () => {
+    getDate: function() {
         return this.date;
     },
-    getName: () => {
+    getName: function() {
         return this.name;
     },
-    getMessage: () => {
+    getMessage: function() {
         return this.message;
     },
-    setDate: (date) => {
+    setDate: function(date) {
         this.date = date;
     },
-    setName: (name) => {
+    setName: function(name) {
         this.name = name;
     },
-    setMessage: (message) => {
+    setMessage: function(message) {
         this.message = message;
     }
 };

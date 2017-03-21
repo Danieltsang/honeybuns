@@ -77,11 +77,15 @@ class App extends Component {
     } else if(!this.state.uploadLoading) {
         mainArea = <Upload onClick={this.upload} />;
     } else {
-        const divStyle = {
-            'marginLeft': '43vw',
-            'marginTop': '50vh'
-        };
-        mainArea = <h1 style={divStyle}>Loading</h1>;
+        mainArea = (
+            <div className="spinner">
+                <div className="rect1"></div>
+                <div className="rect2"></div>
+                <div className="rect3"></div>
+                <div className="rect4"></div>
+                <div className="rect5"></div>
+            </div>
+        );
     }
     return mainArea;
   }
