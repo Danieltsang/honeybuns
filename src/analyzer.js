@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import sentimentAnalysis from 'sentiment-analysis';
-import nlp from 'compromise';
+let nlp = window.nlp;
 
 /**
  * User:

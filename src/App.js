@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import MessageArea from './components/MessageArea.js'
-import Parse from './parse';
+import Parser from './parser';
 import Upload from './components/Upload.js';
 import Content from './components/Content.js';
 import { Grid, Row, Col } from 'react-bootstrap';
-
 
 class App extends Component {
 
@@ -36,7 +35,7 @@ class App extends Component {
 
   upload(e) {
       this.setState({uploadLoading: true});
-      let p = new Parse(e);
+      let p = Parser(e);
       p.parseText((q, data) => {
           this.setState({
               uploadLoading: false,
