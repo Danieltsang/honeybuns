@@ -1,6 +1,5 @@
 import _ from 'underscore';
-import sentimentAnalysis from 'sentiment-analysis';
-let nlp = window.nlp;
+let MyAnalyzeWorker = require('!worker?inline!babel!./analyze.worker.js'); // eslint-disable-line import/no-webpack-loader-syntax
 
 /**
  * User:
@@ -27,8 +26,6 @@ let nlp = window.nlp;
  *  }
  * @returns {{getAllData: (function()), update: (function(*, *, *, *)), analyze: (function(*))}}
  */
-let userCount = 0;
-
 function Analyzer() {
     this.data = {
         users: {},
@@ -42,29 +39,29 @@ Analyzer.prototype.getAllData = function() {
 };
 
 Analyzer.prototype.analyzeAllData = function() {
-    let allWords = {};
+    // @TODO uncomment when figure out how to display meaningful word count
+    // let allWords = {};
     let allEmojis = {};
     _.each(this.data.users, (user) => {
-        // Create items array
-        let words = Object.keys(user.words).map(function(key) {
-            return [key, user.words[key]];
-        });
-
-        _.each(user.words, (val, key) => {
-            if (allWords[key]) {
-                allWords[key] += val;
-            } else {
-                allWords[key] = val;
-            }
-        });
-
-        // Sort the array based on the second element
-        words.sort(function(first, second) {
-            return second[1] - first[1];
-        });
-
-        user.highestWordCountDictionary = words.slice(0, 5);
-
+        // @TODO uncomment when figure out how to display meaningful word count
+        // let words = Object.keys(user.words).map(function(key) {
+        //     return [key, user.words[key]];
+        // });
+        //
+        // _.each(user.words, (val, key) => {
+        //     if (allWords[key]) {
+        //         allWords[key] += val;
+        //     } else {
+        //         allWords[key] = val;
+        //     }
+        // });
+        //
+        // // Sort the array based on the second element
+        // words.sort(function(first, second) {
+        //     return second[1] - first[1];
+        // });
+        //
+        // user.highestWordCountDictionary = words.slice(0, 5);
         let emojis = [];
         if (!_.isEmpty(user.emojis)) {
             emojis = Object.keys(user.emojis).map(function(key) {
@@ -87,116 +84,38 @@ Analyzer.prototype.analyzeAllData = function() {
         user.highestEmojiCountDictionary = emojis.slice(0, emojis.length > 5 ? 5 : emojis.length);
     });
 
-    let items = Object.keys(allWords).map(function(key) {
-        return [key, allWords[key]];
-    });
-
-    // Sort the array based on the second element
-    items.sort(function(first, second) {
-        return second[1] - first[1];
-    });
-
-    this.data.allWordCountDictionary = items.slice(0, 5);
+    // @TODO uncomment when figure out how to display meaningful word count
+    // let items = Object.keys(allWords).map(function(key) {
+    //     return [key, allWords[key]];
+    // });
+    //
+    // // Sort the array based on the second element
+    // items.sort(function(first, second) {
+    //     return second[1] - first[1];
+    // });
+    //
+    // this.data.allWordCountDictionary = items.slice(0, 5);
 };
 
-Analyzer.prototype.update = function(user, words, emojis, numWords, messageLength, sentiment) {
-    user.totalMessages++;
-    Object.keys(words).forEach(word => {
-        if (user.words[word]) {
-            user.words[word] += words[word];
-        } else {
-            user.words[word] = words[word];
+Analyzer.prototype.analyzeMessages = function(messages, callback) {
+    const worker = new MyAnalyzeWorker();
+
+    let t2 = performance.now();
+    worker.onmessage = (e) => {
+        if (e.data.type === 'done') {
+            worker.terminate();
         }
-    });
-    Object.keys(emojis).forEach(emoji => {
-        if (user.emojis[emoji]) {
-            user.emojis[emoji] += words[emoji];
-        } else {
-            user.emojis[emoji] = words[emoji];
-        }
-    });
-    user.numWords.push(numWords);
-    user.messageLengths.push(messageLength);
 
-    user.averageNumberWordsInMessage = _.reduce(user.numWords, (memo, num) => memo + num, 0) / user.numWords.length;
-    user.averageMessageLength = _.reduce(user.messageLengths, (memo, num) => memo + num, 0) / user.messageLengths.length;
+        console.log("Analyzer host received: ", e.data.value);
 
-    if (sentiment !== 0) {
-        user.sentiments.push(sentiment);
-        user.averageSentiment = _.reduce(user.sentiments, (memo, num) => memo + num, 0) *1.0/ user.sentiments.length;
-    }
-};
+        this.data.users = JSON.parse(e.data.value.users);
+        this.data.totalMessages = e.data.value.totalMessages;
+        let t3 = performance.now();
+        console.log("Analyzing all users took " + (t3 - t2) + " milliseconds.");
 
-// @TODO use nlp somehow...
-Analyzer.prototype.getWords = function(sentence) {
-    let sentenceData = nlp(sentence);
-    let words = [];
-    sentenceData.terms().data().forEach(word => {
-        let wordData = nlp(word.text);
-        if (wordData.match('(#Singular|#Plural|#Verb|#Adjective|#Value)').out() !== "") {
-            words.push(wordData.out());
-        }
-    });
-    // console.log(words);
-    return words;
-};
-
-Analyzer.prototype.getEmoji = function(word) {
-    let wordData = nlp(word);
-    if (wordData.match('#Emoji').out() !== "") {
-        return wordData.out();
-    }
-    return null
-};
-
-Analyzer.prototype.analyze = function(message) {
-    let colors = ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)', 'rgba(192,192,192,0.3)', 'rgba(255,255,0,0.3)', 'rgba(255,0,255,0.3)', 'rgba(100,140,250,0.3)', 'rgba(241,190,255,0.3)', 'rgba(0,0,70,0.3)', 'rgba(255,90,70,0.3)', 'rgba(12,90,12,0.3)'];
-    let words = {};
-    let emojis = {};
-    message.message.split(" ").forEach(word => {
-        let emoji = this.getEmoji(word);
-        if (emoji) {
-            if (emojis[emoji]) {
-                emojis[emoji] += 1;
-            } else {
-                emojis[emoji] = 1;
-            }
-        }
-        let w = word.toLowerCase();
-        if (words[w]) {
-            words[w] += 1;
-        } else {
-            words[w] = 1;
-        }
-    });
-
-    this.data.totalMessages++;
-
-    let numWords = message.message.split(" ").length;
-    let messageLength = message.message.length;
-    let sentiment = sentimentAnalysis(message.message);
-    let sentiments = sentiment ? [sentiment] : [];
-    if (!this.data.users[message.name]) {
-        this.data.users[message.name] = {
-            words: words,
-            emojis: emojis,
-            numWords: [numWords],
-            messageLengths: [messageLength],
-            sentiments: sentiments,
-            averageNumberWordsInMessage: numWords,
-            averageMessageLength: messageLength,
-            userColor: colors[userCount],
-            averageSentiment: sentiment,
-            totalMessages: 1
-        };
-        userCount += 1;
-        if (userCount > colors.length-1) {
-            userCount = 0
-        }
-    } else {
-        this.update(this.data.users[message.name], words, emojis, numWords, messageLength, sentiment);
-    }
-
+        callback();
+    };
+    worker.postMessage({type: "start", value: JSON.stringify(messages)});
 };
 
 export default Analyzer;

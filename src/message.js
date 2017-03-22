@@ -20,14 +20,14 @@ Message.prototpe = {
     getMessage: function() {
         return this.message;
     },
+    setMessage: function(message) {
+        this.message = message;
+    },
     setDate: function(date) {
         this.date = date;
     },
     setName: function(name) {
         this.name = name;
-    },
-    setMessage: function(message) {
-        this.message = message;
     }
 };
 

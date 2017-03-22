@@ -14,7 +14,7 @@ class TopUsageGraph extends Component {
         const barChartData = {
           labels: labels_arr,
           datasets: [{
-              label: 'Most Used ' + this.props.value,
+              label: this.props.value,
               data: data_arr,
               backgroundColor: 'rgba(255,99,132,0.2)',
               borderColor: 'rgba(255,99,132,1)',

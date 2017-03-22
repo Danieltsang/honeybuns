@@ -44,7 +44,7 @@ class Content extends Component {
         const barChartData = {
             labels: labels,
             datasets: [{
-                label: 'Words',
+                label: 'Messages',
                 data: data,
                 backgroundColor: 'rgba(255,99,132,0.2)',
                 borderColor: 'rgba(255,99,132,1)',
