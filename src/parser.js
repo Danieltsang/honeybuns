@@ -37,19 +37,12 @@ const Parser = (e) => {
                 }
                 messages = JSON.parse(message.value);
 
-                let t2 = performance.now();
                 const onFinish = () => {
-                    let t3 = performance.now();
-                    console.log("Call to analyze each message took " + (t3 - t2) + " milliseconds."); // this takes 41s for big file BADDD
-
                     messages.forEach((m, i) => {
                         messages[i] = new Message(getDate(m.date), m.name, m.message);
                     });
 
-                    let t4 = performance.now();
                     a.analyzeAllData();
-                    let t5 = performance.now();
-                    console.log("Call to analyze all messages took " + (t5 - t4) + " milliseconds.");
                     if (callback) {
                         callback(messages, a.getAllData()); // this should call setstate to notify of completion
                     }

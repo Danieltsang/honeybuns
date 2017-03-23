@@ -100,7 +100,7 @@ Analyzer.prototype.analyzeAllData = function() {
 Analyzer.prototype.analyzeMessages = function(messages, callback) {
     const worker = new MyAnalyzeWorker();
 
-    let t2 = performance.now();
+    // let t2 = performance.now();
     worker.onmessage = (e) => {
         if (e.data.type === 'done') {
             worker.terminate();
@@ -108,10 +108,16 @@ Analyzer.prototype.analyzeMessages = function(messages, callback) {
 
         console.log("Analyzer host received: ", e.data.value);
 
-        this.data.users = JSON.parse(e.data.value.users);
+        let users = JSON.parse(e.data.value.users);
+        _.each(users, user => {
+            user.averageNumberWordsInMessage = user.numWords.reduce((memo, num) => memo + num, 0) / user.numWords.length;
+            user.averageMessageLength = user.messageLengths.reduce((memo, num) => memo + num, 0) / user.messageLengths.length;
+            user.averageSentiment = user.sentiments.reduce((memo, num) => memo + num, 0) * 1.0 / user.sentiments.length;
+        });
+        this.data.users = users;
         this.data.totalMessages = e.data.value.totalMessages;
-        let t3 = performance.now();
-        console.log("Analyzing all users took " + (t3 - t2) + " milliseconds.");
+        // let t3 = performance.now();
+        // console.log("Analyzing all users took " + (t3 - t2) + " milliseconds.");
 
         callback();
     };

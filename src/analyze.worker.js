@@ -5,6 +5,31 @@ let users = {};
 let userCount = 0;
 let totalMessages = 0;
 
+/**
+ * User:
+ * { "name":
+ *  {
+ *    words:
+ *    {
+ *      "hi": 2,
+ *      "bye": 5
+ *     },
+ *    emojis: {
+ *      (emoji): 5
+ *    }
+ *    numWords: [19, 20, 30],
+ *    messageLengths: [123, 119, 179, 200],
+ *    sentiments: [0.23, 0.19, -0.79, 1.00],
+ *    highestWordCountDictionary: [ [ 'd', 17 ], [ 'c', 11 ], [ 'z', 9 ], [ 'b', 7 ], [ 'y', 6 ] ]
+ *    highestEmojiCountDictionary: [ [ 'd', 17 ], [ 'c', 11 ], [ 'z', 9 ], [ 'b', 7 ], [ 'y', 6 ] ]
+ *    averageNumberWordsInMessage: 20,
+ *    averageMessageLength: 156,
+ *    averageSentiment: 0.35
+ *   },
+ *   messagesSent: 259
+ *  }
+ */
+
 function update(user, words, emojis, numWords, messageLength, sentiment) {
     user.totalMessages++;
     // @TODO uncomment when figure out how to display meaningful word count
@@ -17,20 +42,16 @@ function update(user, words, emojis, numWords, messageLength, sentiment) {
     // });
     Object.keys(emojis).forEach(emoji => {
         if (user.emojis[emoji]) {
-            user.emojis[emoji] += words[emoji];
+            user.emojis[emoji] += emojis[emoji];
         } else {
-            user.emojis[emoji] = words[emoji];
+            user.emojis[emoji] = emojis[emoji];
         }
     });
     user.numWords.push(numWords);
     user.messageLengths.push(messageLength);
 
-    user.averageNumberWordsInMessage = user.numWords.reduce((memo, num) => memo + num, 0) / user.numWords.length;
-    user.averageMessageLength = user.messageLengths.reduce((memo, num) => memo + num, 0) / user.messageLengths.length;
-
     if (sentiment !== 0) {
         user.sentiments.push(sentiment);
-        user.averageSentiment = user.sentiments.reduce((memo, num) => memo + num, 0) *1.0 / user.sentiments.length;
     }
 
     return user;
@@ -61,12 +82,12 @@ function analyze(message) {
                 emojis[emoji] = 1;
             }
         }
-        let w = word.toLowerCase();
-        if (words[w]) {
-            words[w] += 1;
-        } else {
-            words[w] = 1;
-        }
+        // let w = word.toLowerCase();
+        // if (words[w]) {
+        //     words[w] += 1;
+        // } else {
+        //     words[w] = 1;
+        // }
     });
 
     totalMessages++;
