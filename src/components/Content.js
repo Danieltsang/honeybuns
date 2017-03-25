@@ -2,20 +2,10 @@ import React, { Component } from 'react';
 import { Tabs, Tab, Grid, Row } from 'react-bootstrap';
 import TopUsageGraph from './TopUsageGraph.js';
 // import DateFilter from './DateFilter.js';
-import SearchBar from './SearchBar.js';
 import { Bar } from 'react-chartjs-2';
 import _ from 'underscore';
 
 class Content extends Component {
-    constructor(props) {
-        super(props);
-
-        this.clickResetButton = this.clickResetButton.bind(this);
-    }
-
-    clickResetButton () {
-        this.props.resetMessages();
-    }
 
     renderUserTabs() {
         let i = 1;
@@ -91,16 +81,9 @@ class Content extends Component {
             </Tabs>
           </Row>
           <Row className="top-buffer">
-              <div className="search-bar">
-                  <SearchBar
-                      messageList={this.props.messages}
-                      filterMessages={this.props.filterMessages}
-                      resetMessages={this.clickResetButton}/>
-                  <button onClick={this.clickResetButton}> Reset</button>
-              </div>
-                <h4>User Data</h4>
-                <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
-                {this.renderUserTabs()}
+            <h4>User Data</h4>
+            <Tabs className="nav-tabs" defaultActiveKey={1} id="graph-panel">
+                 {this.renderUserTabs()}
             </Tabs>
           </Row>
         </Grid>

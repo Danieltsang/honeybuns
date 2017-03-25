@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import '../styles/searchbar.css';
+import { FormControl, FormGroup, ControlLabel, Button, Form } from 'react-bootstrap';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -12,16 +14,13 @@ class SearchBar extends Component {
 
   filterForSearchedWord() {
       let msgArray = this.props.messageList.filter(msg => {
-          return msg.message.includes(this.state.value);
+          return msg.message.toLowerCase().includes(this.state.value.toLowerCase());
       });
       this.props.filterMessages(msgArray);
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});
-    if(this.state.value === '') {
-          this.props.resetMessages();
-      }
   }
 
   handleSubmit(event) {
@@ -31,15 +30,32 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <div className="search-bar">
+        <Form inline onSubmit={this.handleSubmit}>
+          <FormGroup controlId='formInLine' bsSize='sm'>
+            <ControlLabel> Search </ControlLabel>
+            <FormControl
+              type='text'
+              value={this.state.value}
+              placeholder='enter keyword'
+              onChange={this.handleChange}
+            />
+            <FormControl.Feedback />
+          </FormGroup>
+          {' '}
+          <Button type="submit"> Submit </Button>
+        </Form>
+      </div>
+    );
+  }
+}
+/*
+<form onSubmit={this.handleSubmit}>
         <label>
           Conversation Search:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Search!" />
       </form>
-    );
-  }
-}
-
+*/
 export default SearchBar;

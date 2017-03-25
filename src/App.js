@@ -16,13 +16,23 @@ class App extends Component {
         messageArray: [],
         messageArrayPermanent: [],
         userData: {},
-        startDate: "",
-        endDate: ""
+        startDate: new Date(),
+        endDate: new Date()
     };
 
     this.upload = this.upload.bind(this);
     this.filterMessages = this.filterMessages.bind(this);
     this.resetMessages = this.resetMessages.bind(this);
+    this.setStartDate = this.setStartDate.bind(this);
+    this.setEndDate = this.setEndDate.bind(this);
+  }
+
+  setStartDate (date) {
+    this.setState({startDate: date.target.value})
+  }
+
+  setEndDate (date) {
+    this.setState({endDate: date.target.value})
   }
 
   filterMessages(messages) {
@@ -30,7 +40,11 @@ class App extends Component {
   }
 
   resetMessages() {
-    this.setState({ messageArray: this.state.messageArrayPermanent.slice() });
+    this.setState({ 
+      messageArray: this.state.messageArrayPermanent.slice(),
+      startDate: this.state.messageArrayPermanent[0].date.format('YYYY-MM-DD'),
+      endDate: this.state.messageArrayPermanent[this.state.messageArrayPermanent.length-1].date.format('YYYY-MM-DD'),
+     });
   }
 
   upload(e) {
@@ -43,8 +57,8 @@ class App extends Component {
               messageArrayPermanent: q,
               messageArray: q,
               userData: data,
-              startDate: q[0].date,
-              endDate: q[q.length - 1].date
+              startDate: q[0].date.local().format('YYYY-MM-DD'),
+              endDate: q[q.length - 1].date.local().format('YYYY-MM-DD')
           })
       });
   }
@@ -59,16 +73,20 @@ class App extends Component {
               <MessageArea
                   messageArray={this.state.messageArray}
                   users={this.state.userData.users}
-                  startDate={this.state.startDate.format("MMMM YYYY")}
-                  endDate={this.state.endDate.format("MMMM YYYY")}/>
+                  startDate={this.state.startDate}
+                  endDate={this.state.endDate}
+                  filterMessages={this.filterMessages}
+                  resetMessages={this.resetMessages}
+                  setStartDate={this.setStartDate}
+                  setEndDate={this.setEndDate}
+                />
             </Col>
             <Col xs={8} md={8}>
                <h4>Analysis</h4>
                 <Content
                     userData={this.state.userData}
                     messages={this.state.messageArray}
-                    filterMessages={this.filterMessages}
-                    resetMessages={this.resetMessages}/>
+                   />
             </Col>
           </Row>
         </Grid>

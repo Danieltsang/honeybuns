@@ -1,6 +1,7 @@
 .message-area {
     overflow-y: scroll;
     max-height: 90vh;
+    min-height: 70vh;
     background-color: white;
     color: black;
     border-radius: 8px;
